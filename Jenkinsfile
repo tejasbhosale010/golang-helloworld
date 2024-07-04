@@ -1,61 +1,33 @@
 pipeline {
     agent any
 
-tools {
-        go 'go1.22.5' // Specify the name configured in Global Tool Configuration
-    }
-
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/tejasbhosale010/golang-helloworld.git'
-            }
-        }
-
         stage('Build') {
             steps {
-                sh 'go build -o myapp'
+                // Build GoLang application
+                sh 'go build -o myapp .'
             }
         }
-/*
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh """
-                    /usr/local/sonar \
-                    -Dsonar.organization=demo-tejas \
-                    -Dsonar.projectKey=demo-tejas_hellogo-lang \
-                    -Dsonar.sources=. \
-                    -Dsonar.host.url=https://sonarcloud.io
-                    """
-                }
+        stage('Build Docker Image') {
+            environment {
+                DOCKER_IMAGE = 'golang/golang:latest'
             }
-        }
-
-        stage('Run Tests') {
             steps {
-                sh 'go test -coverprofile=coverage.out ./...'
-            }
-        }
-
-        stage('Docker Build') {
-            steps {
+                // Build Docker image
                 script {
-                    docker.build("${env.DOCKER_IMAGE}")
+                    docker.build DOCKER_IMAGE
                 }
             }
         }
-
-        stage('Deploy with Ansible') {
+        stage('Push Docker Image') {
             steps {
-                ansiblePlaybook credentialsId: 'ansible-vault-password', inventory: 'path/to/your/inventory', playbook: 'path/to/your/playbook.yml'
+                // Push Docker image to registry
+                script {
+                    docker.withRegistry('https://hub.docker.com', 'DOCKER_CREDITONAL_ID') {
+                        dockerImage.push()
+                    }
+                }
             }
-        }  */
-    }
-
-    post {
-        always {
-            cleanWs()
         }
     }
 }
