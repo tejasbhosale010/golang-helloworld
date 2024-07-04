@@ -20,7 +20,7 @@ pipeline {
                 sh 'go build -o myapp'
             }
         }
-
+/*
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 ansiblePlaybook credentialsId: 'ansible-vault-password', inventory: 'path/to/your/inventory', playbook: 'path/to/your/playbook.yml'
             }
-        }
+        }  */
     }
 
     post {
