@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://your-repo-url.git'
+                git 'https://github.com/tejasbhosale010/golang-helloworld.git'
             }
         }
 
@@ -25,11 +25,11 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     sh """
-                    ${env.SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
-                    -Dsonar.projectKey=myapp \
+                    /usr/local/sonar \
+                    -Dsonar.organization=demo-tejas \
+                    -Dsonar.projectKey=demo-tejas_hellogo-lang \
                     -Dsonar.sources=. \
-                    -Dsonar.host.url=${env.SONAR_HOST_URL} \
-                    -Dsonar.login=${env.SONAR_AUTH_TOKEN}
+                    -Dsonar.host.url=https://sonarcloud.io
                     """
                 }
             }
