@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/tejasbhosale010/golang-helloworld.git'
+                git branch: 'main', url: 'https://github.com/tejasbhosale010/golang-helloworld.git'
             }
         }
 
