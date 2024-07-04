@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        SONARQUBE_SCANNER_HOME = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        SONAR_HOST_URL = 'http://your-sonarqube-server'
-        SONAR_AUTH_TOKEN = credentials('sonarqube-token')
-        DOCKER_IMAGE = 'your-docker-image'
-    }
 
     stages {
         stage('Checkout') {
