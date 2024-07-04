@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+tools {
+        // Define the GoLang tool using the configured name in Jenkins Global Tool Configuration
+        go 'go1.22.5'
+    }
     stages {
         stage('Build') {
             steps {
