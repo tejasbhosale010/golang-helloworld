@@ -9,7 +9,7 @@ tools {
         stage('Build') {
             steps {
                 // Build GoLang application
-                sh 'go mod init'
+                sh 'go mod init example/golang'
                 sh 'go build -o myapp .'
             }
         }
