@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+tools {
+        go 'go1.22.5' // Specify the name configured in Global Tool Configuration
+    }
 
     stages {
         stage('Checkout') {
