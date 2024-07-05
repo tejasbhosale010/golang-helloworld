@@ -12,6 +12,7 @@ tools {
                 sh 'go build -o myapp .'
             }
         }
+/*
         stage('Build Docker Image') {
             environment {
                 DOCKER_IMAGE = 'golang/golang:latest'
@@ -33,6 +34,7 @@ tools {
                 }
             }
         }
+*/
     }
 }
 
