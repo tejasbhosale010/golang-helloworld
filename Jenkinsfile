@@ -9,7 +9,7 @@ tools {
         stage('Build') {
             steps {
                 // Build GoLang application
-                sh 'go build -o myapp .'
+                sh 'go version'
             }
         }
 /*
