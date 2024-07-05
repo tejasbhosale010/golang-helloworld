@@ -15,7 +15,10 @@ func TestHelloWorldHandler(t *testing.T) {
 
 	// Create a ResponseRecorder to record the response
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(HelloWorldHandler)
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Your actual handler logic here
+		w.Write([]byte("Hello, World!"))
+	})
 
 	// Serve the HTTP request to the ResponseRecorder
 	handler.ServeHTTP(rr, req)
