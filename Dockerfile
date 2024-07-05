@@ -1,17 +1,9 @@
-# Dockerfile
+FROM golang:1.22.5
+WORKDIR /app
 
-# Use an official Golang runtime as a parent image
-FROM golang:1.17
-
-# Set the working directory inside the container
-WORKDIR /go/src/app
-
-# Copy the local package files to the container's workspace
 COPY . .
 
-# Build the Go app
-RUN go build -o myapp .
+RUN go build -o main .
 
-# Run the application
-CMD ["./myapp"]
+CMD ["./main"]
 
