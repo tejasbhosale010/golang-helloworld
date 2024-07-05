@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o main .
+RUN go build -o my-go-app .
 
-CMD ["./main"]
+CMD ["./my-go-app"]
 
