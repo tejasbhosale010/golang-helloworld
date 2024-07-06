@@ -1,15 +1,16 @@
 package main
 
 import (
-    "fmt"
-    "time"
+	"fmt"
+	"time"
 )
 
 func main() {
     fmt.Println("Hello, World!")
-    // Keep the container running indefinitely
+    
+    // Keep the application running
     for {
-        time.Sleep(time.Second)
+        time.Sleep(time.Hour)
     }
 }
 
