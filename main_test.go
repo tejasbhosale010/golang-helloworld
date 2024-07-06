@@ -1,39 +1,28 @@
 package main
 
 import (
-	"net/http"
-	"net/http/httptest"
-	"testing"
+    "bytes"
+    "fmt"
+    "os/exec"
+    "strings"
 )
 
-func TestHelloWorldHandler(t *testing.T) {
-	// Create a request to pass to the handler
-	req, err := http.NewRequest("GET", "/", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+func TestHelloWorldProgram(t *testing.T) {
+    // Run the Docker container
+    cmd := exec.Command("docker", "run", "--rm", "go-hello-world")
+    var out bytes.Buffer
+    cmd.Stdout = &out
+    err := cmd.Run()
+    if err != nil {
+        t.Fatalf("Failed to run Docker container: %v", err)
+    }
 
-	// Create a ResponseRecorder to record the response
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Your actual handler logic here
-		w.Write([]byte("Hello, World!"))
-	})
+    // Check if "Hello, World!" is present in the output
+    output := out.String()
+    if !strings.Contains(output, "Hello, World!") {
+        t.Errorf("Expected output 'Hello, World!', got: %s", output)
+    }
 
-	// Serve the HTTP request to the ResponseRecorder
-	handler.ServeHTTP(rr, req)
-
-	// Check the status code
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
-
-	// Check the response body
-	expected := "Hello, World!"
-	if rr.Body.String() != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v",
-			rr.Body.String(), expected)
-	}
+    fmt.Printf("Output: %s", output)
 }
 
