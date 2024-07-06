@@ -5,6 +5,7 @@ import (
     "fmt"
     "os/exec"
     "strings"
+    "testing"
 )
 
 func TestHelloWorldProgram(t *testing.T) {
