@@ -3,27 +3,25 @@ package main
 import (
     "bytes"
     "fmt"
-    "os/exec"
-    "strings"
     "testing"
 )
 
-func TestHelloWorldProgram(t *testing.T) {
-    // Run the Docker container
-    cmd := exec.Command("docker", "run", "--rm", "go-hello-world")
-    var out bytes.Buffer
-    cmd.Stdout = &out
-    err := cmd.Run()
-    if err != nil {
-        t.Fatalf("Failed to run Docker container: %v", err)
+func TestHelloWorld(t *testing.T) {
+    // Redirect standard output to buffer
+    buf := new(bytes.Buffer)
+    old := fmt.Swap(&buf)
+
+    // Call the function that prints "Hello, World!"
+    main()
+
+    // Check the output
+    expected := "Hello, World!\n"
+    actual := buf.String()
+    if actual != expected {
+        t.Errorf("Expected: %s, got: %s", expected, actual)
     }
 
-    // Check if "Hello, World!" is present in the output
-    output := out.String()
-    if !strings.Contains(output, "Hello, World!") {
-        t.Errorf("Expected output 'Hello, World!', got: %s", output)
-    }
-
-    fmt.Printf("Output: %s", output)
+    // Restore original standard output
+    fmt.Swap(old)
 }
 
